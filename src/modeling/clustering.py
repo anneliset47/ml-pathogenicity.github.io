@@ -6,10 +6,16 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from scipy.cluster.hierarchy import linkage, dendrogram, fcluster
 from scipy.spatial.distance import pdist
+from pathlib import Path
 
 # Load cleaned Ensembl dataset
-csv_path = '/Users/annelisethorn/Documents/School/Summer 2025/Machine Learning/Datasets/cleaned_ensembl.csv'
-ensembl_df = pd.read_csv(csv_path)
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+DATA_PATH = BASE_DIR / "data" / "processed" / "cleaned_ensembl.csv"
+ensembl_df = pd.read_csv(DATA_PATH)
+
+# Create figures directory if it doesn't exist
+FIGURES_DIR = BASE_DIR / "figures"
+FIGURES_DIR.mkdir(parents=True, exist_ok=True)
 
 # Select features and sample down for memory efficiency
 features = ['Length', 'strand']
@@ -37,7 +43,8 @@ best_labels = [labels for k, labels in kmeans_results if k == best_k][0]
 X['KMeans_Cluster'] = best_labels
 
 # Save KMeans clustered data
-X.to_csv("kmeans_clustered_data.csv", index=False)
+output_path = BASE_DIR / "data" / "processed" / "kmeans_clustered_data.csv"
+X.to_csv(output_path, index=False)
 
 # Plot silhouette scores
 silhouette_df = pd.DataFrame(list(silhouette_scores.items()), columns=["k", "SilhouetteScore"])
@@ -45,7 +52,8 @@ plt.figure(figsize=(6, 4))
 sns.lineplot(data=silhouette_df, x='k', y='SilhouetteScore', marker='o')
 plt.title("Silhouette Scores for Different k (K-Means)")
 plt.tight_layout()
-plt.savefig("silhouette_scores_sampled.png")
+output_path = BASE_DIR / "figures" / "silhouette_scores_sampled.png"
+plt.savefig(output_path)
 plt.close()
 
 # HIERARCHICAL CLUSTERING
@@ -62,7 +70,8 @@ plt.title("Hierarchical Clustering Dendrogram (cosine, avg linkage)")
 plt.xlabel("Sample Index")
 plt.ylabel("Cosine Distance")
 plt.tight_layout()
-plt.savefig("hierarchical_dendrogram.png")
+output_path = BASE_DIR / "figures" / "hierarchical_dendrogram.png"
+plt.savefig(output_path)
 plt.close()
 
 # Cut dendrogram to form flat clusters
@@ -70,7 +79,8 @@ h_labels = fcluster(linkage_matrix, t=best_k, criterion='maxclust')
 X['HClust_Cluster'] = h_labels
 
 # Save final combined dataframe
-X.to_csv("kmeans_hclust_clusters.csv", index=False)
+output_path = BASE_DIR / "data" / "processed" / "kmeans_hclust_clusters.csv"
+X.to_csv(output_path, index=False)
 
 # Save denogram plot as png
 plt.figure(figsize=(10, 6))
@@ -79,4 +89,6 @@ plt.title("Hierarchical Clustering Dendrogram (cosine, avg linkage)")
 plt.xlabel("Sample Index")
 plt.ylabel("Cosine Distance")
 plt.tight_layout()
-plt.savefig("hierarchical_dendrogram.png")
+output_path = BASE_DIR / "figures" / "hierarchical_dendrogram.png"
+plt.savefig(output_path)
+plt.close()
