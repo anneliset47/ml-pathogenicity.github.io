@@ -1,0 +1,68 @@
+# =========================
+# OS Files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv/
+
+# =========================
+# Jupyter
+# =========================
+.ipynb_checkpoints/
+
+# =========================
+# Environment variables
+# =========================
+.env
+.env.*
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# Large Data Files (optional – adjust as needed)
+# =========================
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# =========================
+# Model artifacts
+# =========================
+*.pkl
+*.joblib
+*.h5
+*.model
+*.onnx
+
+# =========================
+# VS Code
+# =========================
+.vscode/
+
+# =========================
+# macOS metadata
+# =========================
+.AppleDouble
+.LSOverride
+Icon?
+
+# =========================
+# Temporary files
+# =========================
+*.swp
+*.tmp
