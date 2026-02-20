@@ -1,0 +1,28 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
+
+[tool.mypy]
+python_version = "3.12"
+check_untyped_defs = true
+ignore_missing_imports = true
+warn_return_any = false
+warn_unused_configs = true
+exclude = [
+  "^docs/",
+  "^data/",
+  "^figures/",
+  "^src/modeling/",
+  "^src/data_ingestion/",
+  "^src/data_processing/",
+  "^src/visualization/"
+]
+files = ["run_pipeline.py", "tests"]

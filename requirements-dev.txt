@@ -1,0 +1,6 @@
+# Development-only tooling (lint, type-check, tests)
+# Install with: pip install -r requirements-dev.txt
+
+pytest==8.4.1
+ruff==0.12.11
+mypy==1.17.1

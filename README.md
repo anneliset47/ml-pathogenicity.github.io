@@ -27,6 +27,25 @@ Machine learning analysis and visual reporting for classifying genetic variants 
 └── Makefile            # setup/reproduce shortcuts
 ```
 
+## Architecture
+
+```mermaid
+flowchart LR
+	A[data/raw + data/processed inputs] --> B[run_pipeline.py]
+	B --> C[PCA]
+	B --> D[Clustering]
+	B --> E[Decision Tree]
+	B --> F[Naive Bayes]
+	B --> G[SVM]
+	B --> H[Neural Network optional]
+	C --> I[figures + data/processed]
+	D --> I
+	E --> I
+	F --> I
+	G --> I
+	H --> I
+```
+
 ## Quickstart
 
 ### Option A: Make (fastest)
@@ -36,6 +55,13 @@ git clone https://github.com/anneliset47/ml-pathogenicity.github.io.git
 cd ml-pathogenicity.github.io
 make setup
 make reproduce
+```
+
+For contributor/developer quality tooling:
+
+```bash
+make setup-dev
+make quality
 ```
 
 ### Option B: Manual
@@ -80,6 +106,7 @@ python run_pipeline.py --all --with-nn
 - Required input files are validated before each step.
 - Input datasets are included in this repository.
 - CI enforces reproducibility on every push/PR via `.github/workflows/reproducibility.yml`.
+- CI also enforces linting (`ruff`), type-checking (`mypy`), and smoke tests (`pytest`).
 
 ## Expected Artifacts
 
@@ -97,6 +124,20 @@ Optional NN run also produces:
 - `figures/nn_confusion_matrix.png`
 - `data/processed/nn_train_sample.csv`
 
+## Model Performance Snapshot
+
+Representative local run metrics from the bundled dataset:
+
+| Model | Metric | Value |
+|---|---|---|
+| Decision Tree | Accuracy | 0.63 |
+| Naive Bayes | Accuracy | 0.67 |
+| SVM (best tested config) | Accuracy | 0.7333 |
+
+Notes:
+- SVM comparison values are persisted to `data/processed/svm_results.csv`.
+- Values may vary slightly if data or preprocessing changes.
+
 ## Repository Standards
 
 - Contributing guide: `CONTRIBUTING.md`
@@ -104,6 +145,19 @@ Optional NN run also produces:
 - Security policy: `SECURITY.md`
 - Citation metadata: `CITATION.cff`
 - Changelog: `CHANGELOG.md`
+- Release notes template: `RELEASE_NOTES_TEMPLATE.md`
+
+## Limitations and Future Work
+
+Current limitations:
+- Feature engineering remains intentionally simple for reproducibility and readability.
+- Metrics are based on the bundled dataset and should not be interpreted as clinical-grade performance.
+- Some legacy exploratory scripts are retained for provenance and are not fully standardized.
+
+Planned improvements:
+- Add richer feature sets and calibrated probability outputs.
+- Expand unit test coverage for modeling helper functions.
+- Add automated release publishing with versioned notes.
 
 ## Troubleshooting
 
