@@ -1,4 +1,4 @@
-# ML Pathogenicity Classification
+# Predicting the Pathogenicity of Genetic Variants Using Machine Learning
 
 ## Live Project
 
