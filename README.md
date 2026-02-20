@@ -1,73 +1,112 @@
 # ML Pathogenicity Classification
 
-## Live Project
+[![Reproducibility Check](https://github.com/anneliset47/ml-pathogenicity.github.io/actions/workflows/reproducibility.yml/badge.svg)](https://github.com/anneliset47/ml-pathogenicity.github.io/actions/workflows/reproducibility.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-🔗 View the live application here:  
-https://ml-pathogenicity.github.io/
+Machine learning analysis and visual reporting for classifying genetic variants as pathogenic vs non-pathogenic.
 
----
+- Live project site: https://ml-pathogenicity.github.io/
+- Primary audience: recruiters, collaborators, and reviewers who need a one-command reproducible run.
 
-## Overview
+## Project Structure
 
-This project applies machine learning techniques to classify genetic variants as pathogenic or benign.
+```text
+.
+├── data/
+│   ├── raw/            # source datasets
+│   ├── processed/      # cleaned and model output tables
+│   └── derived/
+├── src/
+│   ├── data_ingestion/
+│   ├── data_processing/
+│   ├── modeling/
+│   └── visualization/
+├── figures/            # generated plots
+├── docs/               # GitHub Pages site content
+├── run_pipeline.py     # reproducible pipeline entrypoint
+└── Makefile            # setup/reproduce shortcuts
+```
 
-The goal is to build a predictive model that assists in identifying potentially harmful mutations using structured biological features.
+## Quickstart
 
-This repository hosts the GitHub Pages deployment of the project.
+### Option A: Make (fastest)
 
----
+```bash
+git clone https://github.com/anneliset47/ml-pathogenicity.github.io.git
+cd ml-pathogenicity.github.io
+make setup
+make reproduce
+```
 
-## Problem Statement
+### Option B: Manual
 
-Genetic variants can have vastly different impacts on health outcomes. Determining whether a mutation is pathogenic (disease-causing) or benign is critical for:
+```bash
+git clone https://github.com/anneliset47/ml-pathogenicity.github.io.git
+cd ml-pathogenicity.github.io
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+python run_pipeline.py --all
+```
 
-- Clinical diagnostics
-- Risk assessment
-- Personalized medicine
+## What the Pipeline Runs
 
-This project explores how supervised machine learning models can assist in this classification task.
+`python run_pipeline.py --all` runs in deterministic order:
 
----
+1. PCA
+2. Clustering
+3. Decision Tree
+4. Naive Bayes
+5. SVM
 
-## Methods
+Outputs are generated in:
 
-The modeling workflow includes:
+- `figures/`
+- `data/processed/`
 
-- Data preprocessing and feature engineering
-- Exploratory data analysis
-- Model training and validation
-- Performance evaluation using classification metrics
+## Optional Neural Network Step
 
-Algorithms explored may include:
+The neural network is intentionally optional because TensorFlow installation can vary by platform.
 
-- Logistic Regression
-- Random Forest
-- Support Vector Machines
-- Gradient Boosting (if applicable)
+```bash
+pip install -r requirements-optional.txt
+python run_pipeline.py --all --with-nn
+```
 
-Evaluation metrics:
+## Reproducibility Guarantees
 
-- Accuracy
-- Precision
-- Recall
-- F1 Score
-- ROC-AUC
+- Fixed random seeds are used where applicable (`random_state=42` / NumPy seed).
+- Required input files are validated before each step.
+- Input datasets are included in this repository.
+- CI enforces reproducibility on every push/PR via `.github/workflows/reproducibility.yml`.
 
----
+## Expected Artifacts
 
-## Technologies Used
+Core run (`--all`) should produce/update:
 
-- Python
-- Pandas
-- Scikit-learn
-- Matplotlib / Seaborn
-- Jupyter Notebook
-- GitHub Pages (deployment)
+- `figures/pca_projection_sampled.png`
+- `figures/silhouette_scores_sampled.png`
+- `figures/decision_tree_confusion_matrix.png`
+- `figures/naive_bayes_confusion_matrix.png`
+- `figures/svm_confusion_matrices.png`
+- `data/processed/svm_results.csv`
 
----
+Optional NN run also produces:
 
-## Key Takeaways
+- `figures/nn_confusion_matrix.png`
+- `data/processed/nn_train_sample.csv`
 
-- Feature selection significantly impacts classification performance.
-- Model interpretability is critical in biomedical applications.
-- Precision and recall are more meaningful than raw accuracy in imbalanced medical datasets.
+## Repository Standards
+
+- Contributing guide: `CONTRIBUTING.md`
+- Code of conduct: `CODE_OF_CONDUCT.md`
+- Security policy: `SECURITY.md`
+- Citation metadata: `CITATION.cff`
+- Changelog: `CHANGELOG.md`
+
+## Troubleshooting
+
+- Use `python3` if `python` is unavailable.
+- Ensure the virtual environment is activated before install/run.
+- If TensorFlow fails on your machine, skip `--with-nn` and run the core pipeline.

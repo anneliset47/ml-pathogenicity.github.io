@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+title: "ML Pathogenicity Classification"
+message: "If you use this project, please cite it using the metadata below."
+type: software
+authors:
+  - family-names: Thorn
+    given-names: Annelise
+repository-code: "https://github.com/anneliset47/ml-pathogenicity.github.io"
+license: MIT
+abstract: "Machine learning analysis pipeline and visual reporting for pathogenicity classification of genetic variants."
+keywords:
+  - machine-learning
+  - bioinformatics
+  - pathogenicity
+  - genomics
