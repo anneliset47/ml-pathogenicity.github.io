@@ -1,4 +1,4 @@
-# ML Pathogenicity Classification
+# Predicting the Pathogenicity of Genetic Variants Using Machine Learning
 
 [![Reproducibility Check](https://github.com/anneliset47/ml-pathogenicity.github.io/actions/workflows/reproducibility.yml/badge.svg)](https://github.com/anneliset47/ml-pathogenicity.github.io/actions/workflows/reproducibility.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
