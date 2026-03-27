@@ -2,4 +2,4 @@
 # Install with: pip install -r requirements-optional.txt
 # Use this when running: python run_pipeline.py --all --with-nn
 
-tensorflow==2.20.0
+tensorflow==2.21.0
